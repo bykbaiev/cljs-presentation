@@ -13,3 +13,4 @@ To start the project simply run
 npm install
 npm start
 ```
+Then visit http://localhost:8000 to check the result!
