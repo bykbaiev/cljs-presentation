@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <!-- <link rel="stylesheet" href="dist/theme/black.css"> -->
+    <link rel="stylesheet" href="dist/theme/white.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section data-markdown>
+                <textarea data-template>
+                    ### 2021 vs ClojureScript. Still alive?
+                    Alex Bykbaiev
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### About
+
+                    <img src="examples/assets/me.jpg" alt="me" width="250"/>
+
+                    Alex Bykbaiev, Frontend Engineer at Hopin (before acquisition Attendify).
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Agenda
+
+                    - ClojureScript, what is it??
+                    - Staff I like in ClojureScript
+                    - There is always a small fly in the ointment
+                    - How and why we use ClojureScript in production
+                    - Discussion time!
+                </textarea>
+            </section>
+            <section>
+                <h3>ClojureScript, what is it??</h3>
+                <div style="display:flex;align-items:center;">
+                    <div style="padding-right:1rem;">
+                        Clojure is a compiled, functional and dynamically typed language that targets multiple existing runtimes.
+                        </br>
+                        ClojureScript is a compiler for Clojure that targets JavaScript.
+                    </div>
+                    <img src="examples/assets/logo.png" alt="cljs logo" width="250" height="250"/>
+                </div>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Staff I like in ClojureScript
+                    <img src="examples/assets/fun-parts.jpeg" width="400">
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### Management of control flow
+                    <img src="examples/assets/pure.jpeg" width="400">
+                </textarea>
+            </section>
+            <section data-markdown>
+                <textarea data-template>
+                    ### REPL (Read–eval–print loop)
+                    <img src="examples/assets/repl.gif" width="700">
+                </textarea>
+            </section>
+            <section>
+                <section>
+                    <h3>Collections</h3>
+                    <img src="examples/assets/collections.jpeg" width="500">
+                </section>
+                <section>
+                    <h3>List</h3>
+                    <p>
+                        List provides efficient access to the first elements
+                        (linked list under the hood).
+                    </p>
+                    <pre>
+                        <code data-trim data-noescape>
+                            (def some-list '(1 2 3 4))
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h3>Vector</h3>
+                    <p>
+                        Vector provides efficient index access to its elements.
+                    </p>
+                    <pre>
+                        <code data-trim data-noescape>(def some-vec [1 2 3 4])</code>
+                    </pre>
+                </section>
+                <section>
+                    <h3>Map</h3>
+                    <p>
+                        Map is a collection abstraction that allow you to store key/value pairs.
+                    </p>
+                    <pre>
+                        <code data-trim data-noescape>(def some-map {:a 1 :b 2})</code>
+                    </pre>
+                </section>
+                <section>
+                    <h3>Set</h3>
+                    <p>
+                        Set stores zero or more unique items of any type and is unordered.
+                    </p>
+                    <pre>
+                        <code data-trim data-noescape>(def set' #{1 2 3 4})</code>
+                    </pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h4>Metaprogramming</h4>
+                    <p>
+                        Clojure is also a dialect of LISP (LISt Processing language) by design.
+                        The aim was to make the language more extensible.
+                    </p>
+                    <p>
+                        Clojurescript allows you to write code that writes code (macroses).
+                    </p>
+                </section>
+                <section>
+                    <h4>Macros</h4>
+                    <pre>
+                        <code data-trim data-noescape data-line-numbers>
+                            (defmacro infix
+                                [infixed]
+                                (list (second infixed) (first infixed) (last infixed)))
+
+                            (+ 1 1)
+                            => 2
+
+                            (infix (1 + 1))
+                            => 2
+                        </code>
+                    </pre>
+                </section>
+            </section>
+            <section>
+                <h4>Treading macroses</h4>
+            </section>
+            <section>
+                <h4>Transducers</h4>
+            </section>
+            <section>
+                <h4>Performance</h4>
+            </section>
+            <section>
+                <h4>Ecosystem</h4>
+            </section>
+            <section>
+                <section>
+                    <h3>There is always a fly in the ointment</h3>
+                    <img src="examples/assets/fly-in-ointment.jpeg" alt="cons" width="300">
+                </section>
+                <section>
+                    <h4>Bundle size</h4>
+                </section>
+                <section>
+                    <h4>Performance</h4>
+                </section>
+                <section>
+                    <h4>Dynamic type system</h4>
+                </section>
+                <section>
+                    <h4>Support</h4>
+                    <img src="examples/assets/8-years.png" alt="8 years to fix performance issue" width="250">
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>
