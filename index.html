@@ -17,6 +17,23 @@
 </head>
 
 <body>
+    <style>
+        .columns2 {
+            display:flex;
+            align-items:center;
+        }
+
+        .columns {
+            display:flex;
+            align-items:center;
+            justify-content: space-between;
+        }
+
+        .left-column {
+            padding-right: 1rem;
+        }
+    </style>
+
     <div class="reveal">
         <div class="slides">
             <section data-markdown>
@@ -47,8 +64,8 @@
             </section>
             <section>
                 <h3>ClojureScript, what is it??</h3>
-                <div style="display:flex;align-items:center;">
-                    <div style="padding-right:1rem;">
+                <div class="columns2">
+                    <div class="left-column">
                         Clojure is a compiled, functional and dynamically typed language that targets multiple existing runtimes.
                         </br>
                         ClojureScript is a compiler for Clojure that targets JavaScript.
@@ -59,25 +76,30 @@
             <section data-markdown>
                 <textarea data-template>
                     ### Staff I like in ClojureScript
-                    <img src="examples/assets/fun-parts.jpeg" width="400">
+                    <img src="examples/assets/fun-parts.jpeg" alt="advantages of ClojureScript" width="400">
                 </textarea>
             </section>
             <section data-markdown>
                 <textarea data-template>
                     ### Management of control flow
-                    <img src="examples/assets/pure.jpeg" width="400">
+                    <img src="examples/assets/pure.jpeg" alt="control flow in FP" width="400">
                 </textarea>
             </section>
             <section data-markdown>
                 <textarea data-template>
                     ### REPL (Read–eval–print loop)
-                    <img src="examples/assets/repl.gif" width="700">
+                    <img src="examples/assets/repl.gif" alt="REPL" width="700">
                 </textarea>
             </section>
             <section>
                 <section>
                     <h3>Collections</h3>
-                    <img src="examples/assets/collections.jpeg" width="500">
+                    <div class="columns2">
+                        <div class="left-column">
+                            All collections in ClojureScript are persistent (immutability + structural sharing).
+                        </div>
+                        <img src="examples/assets/structural-sharing.png" alt="structural sharing" width="500">
+                    </div>
                 </section>
                 <section>
                     <h3>List</h3>
@@ -86,8 +108,11 @@
                         (linked list under the hood).
                     </p>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape>
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3">
                             (def list' '(1 2 3 4))
+
+                            (list' 0)
+                            => 1
                         </code>
                     </pre>
                 </section>
@@ -97,7 +122,12 @@
                         Vector provides efficient index access to its elements.
                     </p>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape>(def vec' [1 2 3 4])</code>
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3">
+                            (def vec' [1 2 3 4])
+                        
+                            (vec' 0)
+                            => 1
+                        </code>
                     </pre>
                 </section>
                 <section>
@@ -106,7 +136,18 @@
                         Map is a collection abstraction that allow you to store key/value pairs.
                     </p>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape>(def map' {:a 1 :b 2})</code>
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3,6,9">
+                            (def map' {:a 1 :b 2})
+
+                            (get map' :a)
+                            => 1
+
+                            (map' :a)
+                            => 1
+
+                            (:a map')
+                            => 1
+                        </code>
                     </pre>
                 </section>
                 <section>
@@ -115,7 +156,15 @@
                         Set stores zero or more unique items of any type and is unordered.
                     </p>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape>(def set' #{1 2 3 4})</code>
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3,6">
+                            (def set' #{1 2 3 10})
+                        
+                            (set' 0)
+                            => nil
+
+                            (set' 10)
+                            => 10
+                        </code>
                     </pre>
                 </section>
             </section>
@@ -146,11 +195,11 @@
                         </code>
                     </pre>
                 </section>
-                <section>
+                <section data-auto-animate>
                     <h4>Threading macros</h4>
-                    <p>Thread-first macro</p>
-                    <pre>
-                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1-2,6-11,17-23">
+                    <p data-id="code-title">Thread-first macro</p>
+                    <pre data-id="code-animation">
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1-2|6-11|17-23">
                             (def user {:first-name "Alex"
                                        :last-name  "Bykbaiev"})
                             => {:first-name "Alex"
@@ -185,13 +234,13 @@
                             (def numbers [1 2 3 4 5 6 7 8 9 0])
 
                             (take 2 (filter odd? (map inc numbers)))
-                            => (3, 5)
+                            => (3 5)
 
                             (->> numbers
                                  (map inc)
                                  (filter odd?)
                                  (take 2))
-                            => (3, 5)
+                            => (3 5)
                         </code>
                     </pre>
                 </section>
@@ -203,14 +252,14 @@
                             (def points {:vals [1 2 3 4 5 6 7 8 9 0]})
 
                             (take 2 (filter odd? (map inc (get points :vals))))
-                            => (3, 5)
+                            => (3 5)
 
                             (as-> points $
                                   (get $ :vals)
                                   (map inc $)
                                   (filter odd? $)
                                   (take 2 $))
-                            => (3, 5)
+                            => (3 5)
                         </code>
                     </pre>
                 </section>
@@ -256,13 +305,94 @@
                 </section>
             </section>
             <section>
-                <h4>Transducers</h4>
+                <section>
+                    <h4>Transducers</h4>
+                    <div class="columns2">
+                        <div class="left-column">
+                            A transducer is a composable higher-order reducer. It takes a reducer as input, and returns another reducer.
+                        </div>
+                        <img src="/examples/assets/transducer.gif" alt="transducer">
+                    </div>
+                </section>
+                <section data-auto-animate>
+                    <pre data-id="code-animation">
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3-6|11-13,15,18,21">
+                            (def xs [1 2 3 4 5 6 7 8 9 0])
+
+                            (->> xs
+                                 (map inc)
+                                 (filter odd?)
+                                 (take 2))
+                            => (3 5)
+
+                            ;; map = transform => reducer => reducer
+
+                            (def tr (comp (map inc)
+                                          (filter odd?)
+                                          (take 2)))
+
+                            (reduce (tr conj) [] xs)
+                            => [3 5]
+
+                            (into [] tr xs)
+                            => [3 5]
+
+                            (transduce tr conj [] xs)
+                            => [3 5]
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h4>Transducers</h4>
+                    <img src="/examples/assets/transducer-from-the-box.png" alt="ClojureScript functions as transducers" width="800" />
+                </section>
             </section>
             <section>
-                <h4>Performance</h4>
+                <section>
+                    <h4>Performance</h4>
+                    <img src="examples/assets/compiler.png" alt="compilation flow" width="300">
+                </section>
+                <section>
+                    <pre>
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers>
+                            (def xs [1 2 3 4 5 6 7 8 9 0])
+
+                            (->> xs
+                                (map inc)
+                                (filter odd?)
+                                (take 2))
+                        </code>
+                    </pre>
+                    <pre>
+                        <code class="language-js" data-trim data-noescape data-line-numbers>
+                            cljs.user.xs = new cljs.core.PersistentVector(
+                                null, 10, 5, cljs.core.PersistentVector.EMPTY_NODE, [(1),(2),(3),(4),(5),(6),(7),(8),(9),(0)], null
+                            );
+                            cljs.core.take.call(
+                                null,(2),cljs.core.filter.call(
+                                    null,cljs.core.odd_QMARK_,cljs.core.map.call(
+                                        null,cljs.core.inc,cljs.user.xs
+                                    )
+                                )
+                            );
+                        </code>
+                    </pre>
+                </section>
             </section>
             <section>
                 <h4>Ecosystem</h4>
+                <ul>
+                    <li>Leiningen ~ package.json (dependencies + scripts)</li>
+                    <li>shadow-cljs ~ webpack</li>
+                    <li>Reagent/Om/Rum - React wrappers</li>
+                    <li>Re-frame - Redux on steroids</li>
+                </ul>
+                <div class="columns">
+                    <img src="examples/assets/leiningen.png" alt="Leiningen" width="200">
+                    <img src="examples/assets/shadow-cljs.png" alt="shadow-cljs" width="200">
+                    <img src="examples/assets/reagent.png" alt="reagent" width="200">
+                    <img src="examples/assets/re-frame.png" alt="re-frame" width="200">
+                </div>
             </section>
             <section>
                 <section>
