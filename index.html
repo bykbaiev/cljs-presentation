@@ -50,12 +50,12 @@
 
                     <img src="examples/assets/me.jpg" alt="me" width="250"/>
 
-                    Alex Bykbaiev, Frontend Engineer at Hopin (before acquisition Attendify).
+                    Alex Bykbaiev, Frontend Engineer at Hopin.
 
                     Note:
                     В данный момент я работаю в компании Hopin,
                     до этого работал в Attendify,
-                    пока в августе этого года компанию не приобрели.
+                    пока в июле этого года компанию не приобрели.
                 </textarea>
             </section>
             <section data-markdown>
@@ -99,7 +99,7 @@
             <section data-markdown data-separator-notes="^Note:">
                 <textarea data-template>
                     ### Management of control flow
-                    <img src="examples/assets/pure.jpeg" alt="control flow in FP" width="400">
+                    <img src="examples/assets/pure-fn.png" alt="control flow in FP" width="550">
 
                     Note:
                     Управление порядком вычислений
@@ -571,7 +571,38 @@
                 </aside>
             </section>
             <section>
-                <h4>How and why we use ClojureScript in production</h4>
+                <section>
+                    <h4>How and why we use ClojureScript in production</h4>
+                    <img src="examples/assets/attendify-slide.png" alt="Attendify app" width="800">
+                </section>
+                <section>
+                    <h4>We all write Clojure</h4>
+                    <img src="examples/assets/full-stack.jpeg" width="500" alt="full-stack developer">
+                </section>
+                <section>
+                    <h4>ClojureScript is an awesome tool to make things fast</h4>
+                    <img src="examples/assets/fast.png" width="500" alt="fasten development">
+                </section>
+                <section>
+                    <h4>Performance</h4>
+                    <img src="examples/assets/attendify-slide-2.png" alt="Attendify" width="700">
+                    <aside class="notes">
+                        На одном мероприятии на платформе одновременно может быть около 10к пользователей.
+                        Просмотр сессий, общение в чате, знакомства со спонсорами и другими участниками.
+                        Большее число поддерживать сложнее, но тут вопрос, скорее, не в Clojure, а в решениях,
+                        которые были приняты при разработке платформы. В то время был совсем неочевидным факт, что на
+                        онлайн события будут сходиться не десятки, но даже сотни тысяч людей.
+                    </aside>
+                </section>
+                <section>
+                    <h4>Our stack</h4>
+                    <p>Backend: Ring, Compojure (routing), Aleph, HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
+                    <p>Frontend: Reagent/Rum (React wrappers) + re-frame/own state management solution (analogue of</p>
+                </section>
+                <section>
+                    <h4>How do we live in JS world?</h4>
+                    <img src="examples/assets/webpack-module-federation.jpeg" alt="Webpack module federation plugin" width="400">
+                </section>
             </section>
             <section>
                 <h4>Some resources to learn more about ClojureScript</h4>
@@ -585,6 +616,9 @@
             <section>
                 <h4>Q&A</h4>
                 <img src="examples/assets/q-and-a.jpeg" alt="Q&A" width="600">
+            </section>
+            <section>
+                <h4>Thanks for attention!</h4>
             </section>
         </div>
     </div>
