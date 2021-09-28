@@ -285,6 +285,9 @@
                             => 2
                         </code>
                     </pre>
+                    <aside class="notes">
+                        Удобны для оборачивания JS либ (мы юзаем для styled-components, например) и для упрощения больших кусков кода.
+                    </aside>
                 </section>
                 <section data-auto-animate>
                     <h4>Threading macros</h4>
@@ -486,23 +489,87 @@
                 </div>
             </section>
             <section>
-                <section>
-                    <h3>There is always a fly in the ointment</h3>
-                    <img src="examples/assets/fly-in-ointment.jpeg" alt="cons" width="300">
-                </section>
-                <section>
-                    <h4>Bundle size</h4>
-                </section>
-                <section>
-                    <h4>Performance</h4>
-                </section>
-                <section>
-                    <h4>Dynamic type system</h4>
-                </section>
-                <section>
-                    <h4>Support</h4>
-                    <img src="examples/assets/8-years.png" alt="8 years to fix performance issue" width="250">
-                </section>
+                <h3>There is always a fly in the ointment</h3>
+                <img src="examples/assets/fly-in-ointment.jpeg" alt="cons" width="300">
+                <aside class="notes">
+                    Поговорим о недостатках. Приходилось выдавливать их из себя, потому что вообще-то ClojureScript топовый)
+                </aside>
+            </section>
+            <section>
+                <h4>Bundle size</h4>
+                <p>NEED PRODUCTION BUILD</p>
+                <img src="examples/assets/bundle-size.png" alt="bundle size" width="600">
+                <a style="display:block;"
+                   href="https://medium.com/dailyjs/a-realworld-comparison-of-front-end-frameworks-2020-4e50655fe4c1"
+                   target="_blank">
+                    RealWorld Comparison 2020
+                </a>
+                <aside class="notes">
+                    У ClojureScript есть свой runtime, понятное дело, что это добавляет к размеру бандла еще лишние килобайты.
+                    Если сравнивать с JS, то это довольно заметно для маленьких проектов, но чем проект больше,
+                    тем большим количеством каких-то вспомогательных библиотек он обрастает (lodash, ramda, rxjs etc.).
+                    В проектах на ClojureScript библиотек зачастую меньше (язык из коробки предоставляет много возможностей).
+                    Плюс к тому эффективный tree-shaking из коробки у shadow-cljs и по исследованию "RealWorld Comparison" бандл среднего
+                    по размерам проекта на ClojureScript меньше бандла аналогичного проекта, но написанного на ReactJS.
+                </aside>
+            </section>
+            <section>
+                <h4>Performance</h4>
+                <aside class="notes">
+                    Преобразования данных из CLJS в JS и обратно довольно дорогостощие.
+                    При использовании библиотек из JS это может стать проблемой.
+                </aside>
+            </section>
+            <section>
+                <h4>Memory</h4>
+                <aside class="notes">
+                    ClojureScript использует довольно много памяти.
+                    Обычно это связано с персистентностью коллекций и ленивыми вычислениями
+                    (Garbage Collector не понимает, можно ли удалять данные, которые, по факту, уже не используются).
+                </aside>
+            </section>
+            <section>
+                <h4>Dynamic type system</h4>
+                <img src="examples/assets/dynamic-typing.jpeg" alt="dynamic type system" width="400">
+                <aside class="notes">
+                    Тут на вкус и цвет товарищей нет. Лично я от ее отсутствия не особо страдаю,
+                    да и тот факт, что в рантайме все равно ничего не останется, отталкивает от нее.
+                    С Elm-ом и его JSON сериалайзерами работать приятно, с TS-ом просто норм, ни больше ни меньше.
+                </aside>
+            </section>
+            <section>
+                <h4>Support</h4>
+                <img src="examples/assets/8-years.png" alt="8 years to fix performance issue" width="300">
+                <a style="display:block" href="https://www.clojuriststogether.org/" target="_blank">clojurists together</a>
+                <aside class="notes">
+                    Коммьюнити в ClojureScript несколько меньше чем в JS. Иногда можно заметить, как уходят годы на фикс бага в коре
+                    или же библиотеку перестают поддерживать). Но тут все не так плохо: люди говорят, что если давно не было коммитов,
+                    то, значит, все хорошо, и оно и так работает. Существует фонд поддержки разработчиков наиболее важных библиотек на Clojure.
+                    Ребята проводят опросы и выясняют, какие библиотеки наиболее полезны, а потом спонсируют их дальнейшую разработку.
+                    Также вcе следят за обратной совместимостью, например, текущая версия ClojureScript 1.10.879, аналогично обычно состоит
+                    ситуация и для библиотек. Все продумано и стабильно)
+                </aside>
+            </section>
+            <section>
+                <h4>No popular source of knowledge</h4>
+                <p>JS - please, read the documentation, there are also learnjavascript, tonns of "Learn JS in 10 mins", video courses, books, blog posts etc.</p>
+                <p>ClojureScript - hmm... we have Cheatsheet, maybe some API docs, 2-3 books (it's difficult to find, but you should try!)</p>
+                <aside class="notes">
+                    Намного меньше учебных материалов по сравнению с более популярными языками делает ClojureScript не то чтобы
+                    сложным для изучения, но всегда надо что-то искать)
+                </aside>
+            </section>
+            <section>
+                <h4>Job opportunities</h4>
+                <p>It's difficult both to find a job and to hire</p>
+                <img src="examples/assets/difficult-choice.png" alt="how to get a CLJS job" width="320">
+                <aside class="notes">
+                    На самом деле, это шутка, есть хорошие компании, в которых используется ClojureScript)
+                    А отсутствие популярности вызвано отсутствием маркетинговых компаний, язык то топовый :)
+                </aside>
+            </section>
+            <section>
+
             </section>
         </div>
     </div>
