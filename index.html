@@ -40,8 +40,6 @@
                 <textarea data-template>
                     ### 2021 vs ClojureScript. Still alive?
                     Alex Bykbaiev
-                    Note:
-                    Меня зовут Саша, и я пишу на ClojureScript-е.
                 </textarea>
             </section>
             <section data-markdown data-separator-notes="^Note:">
@@ -53,9 +51,7 @@
                     Alex Bykbaiev, Frontend Engineer at Hopin.
 
                     Note:
-                    В данный момент я работаю в компании Hopin,
-                    до этого работал в Attendify,
-                    пока в июле этого года компанию не приобрели.
+                    I'm working at Hopin, previously worked at Attendify (in July it was acquired by Hopin).
                 </textarea>
             </section>
             <section data-markdown>
@@ -63,7 +59,7 @@
                     ### Agenda
 
                     - ClojureScript, what is it??
-                    - Staff I like in ClojureScript
+                    - Stuff I like in ClojureScript
                     - There is always a small fly in the ointment
                     - How and why we use ClojureScript in production
                     - Some resources to learn more about ClojureScript
@@ -80,19 +76,10 @@
                     </div>
                     <img src="examples/assets/logo.png" alt="cljs logo" width="250" height="250"/>
                 </div>
-                <aside class="notes">
-                    Clojure - компилируемый, функциональный и динамически типизированный язык программирования,
-                    который может использоваться на различных платформах (даже .NET CLR). Также это современный диалект Lisp-а:
-                    много скобок, философия кода как данных и мощная система макросов.
-
-                    ClojureScript - это компилятор из Clojure в JavaScript.
-                    Из-за различия целевых платформ (JVM для Clojure и JavaScript для ClojureScript) в последнем
-                    используется немного переработанный диалект Clojure - в основном для типов и структур данных.
-                </aside>
             </section>
             <section data-markdown>
                 <textarea data-template>
-                    ### Staff I like in ClojureScript
+                    ### Stuff I like in ClojureScript
                     <img src="examples/assets/fun-parts.jpeg" alt="advantages of ClojureScript" width="400">
                 </textarea>
             </section>
@@ -100,35 +87,12 @@
                 <textarea data-template>
                     ### Management of control flow
                     <img src="examples/assets/pure-fn.png" alt="control flow in FP" width="550">
-
-                    Note:
-                    Управление порядком вычислений
-
-                    Тут я, ни в коем случае, не хочу спорить с приверженцами различных парадигм программирования :)
-                    Если рассмотреть аспект сложности программного обеспечения с позиции понимания кодовой базы,
-                    то мне намного проще живется, зная, что у меня немутабельный стейт и куча чистых функций,
-                    через которые проходит большая часть данных моего приложения.
-
-                    Но тут все не так просто, так как Clojure, в первую очередь, разрабатывался как практичный
-                    язык программирования. Его нельзя назвать чистым (т.е. есть место для сайд эффектов и взаимодействия с хостом,
-                    тут даже Foreign Function Interface не нужен - можно запросто юзать всевозможный JS код, подключать JS либы).
-                    Так что чем-то пришлось пожертвовать, и тут уже нам приходится прилагать некоторые усилия для поддержки
-                    чистоты)
                 </textarea>
             </section>
             <section data-markdown data-separator-notes="^Note:">
                 <textarea data-template>
                     ### REPL (Read–eval–print loop)
                     <img src="examples/assets/repl.gif" alt="REPL" width="700">
-                    Note:
-                    Цикл "чтение - вычисление - вывод".
-                    Любой код можно выполнить прямо в редакторе простой комбинацией клавиш.
-                    Это упрощает изучение языка, всегда можно, не отходя от кассы, протестировать
-                    какой-то метод или кусочек кода за 0 и прочее.
-                    Но еще большую пользу REPL приносит в работе: REPL сервер напрямую связан с проектом, таким
-                    образом он не только может исполнять куски кода, но и использовать соответствующее состояние моего
-                    приложения. Таким образом я могу посмотреть на данные из хранилища, вызвать какой-либо эффект и посмотреть,
-                    как поменяется UI в браузере.
                 </textarea>
             </section>
             <section>
@@ -140,16 +104,6 @@
                         </div>
                         <img src="examples/assets/structural-sharing.png" alt="structural sharing" width="500">
                     </div>
-                    <aside class="notes">
-                        Персистентная структура данных при внесении каких-либо изменений
-                        сохраняет все свои предыдущие состояния и доступ к этим состояниям.
-                        Таким образом дорогостоящая иммутабельность реализована в ClojureScript
-                        эффективной как по памяти так и по времени. Существует понятие structual sharing, когда
-                        большая часть данных "шерится" между 2 версиями значения,
-                        а пересоздается лишь маленькая часть действительно изменившихся данных.
-
-                        Аналогично работает ImmutableJS. 
-                    </aside>
                 </section>
                 <section>
                     <h3>List</h3>
@@ -170,18 +124,6 @@
                             => true
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Список - эффективный доступ к первому элементу, перебирание элементов, добавление элемента в начало.
-                        Аналог связного списка.
-
-                        В основном, списки в ClojureScript используются для группирования символов в программы -
-                        вызов функции, например, это тоже список. Для хранения данных обычно используют другие коллекции в отличии от Lisp-а,
-                        где все на списках. Такое решение было принятно при разработке языка для упрощения читаемости.
-
-                        Следует заметить, что структуру данных можно использовать как функцию от ее ключа.
-
-                        Также тут можно посмотреть на пример structural sharing-а.
-                    </aside>
                 </section>
                 <section>
                     <h3>Vector</h3>
@@ -196,9 +138,6 @@
                             => 1
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Вектор - эффективный доступ к элементу по индексу, добавление в конец, Аналог массива.
-                    </aside>
                 </section>
                 <section>
                     <h3>Map</h3>
@@ -219,12 +158,6 @@
                             => 1
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Map - коллекция, которая позволяет сохранять пары ключ-значение.
-                        В других языках это называют хэш-меп или словарь. Любая структура данных может использоваться
-                        как ключ мапы, но зачастую используют кейворды - объекты, которые всегда равны сами себе, - из-за
-                        того, что они могут быть использованы в качестве функции.
-                    </aside>
                 </section>
                 <section>
                     <h3>Set</h3>
@@ -242,22 +175,6 @@
                             => 10
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Сет хранит уникальные значения любого типа. Не гарантирует сохранение последовательности.
-                        Часто используется как функция-предикат (значение => значение).
-
-                        Также в ClojureScript есть абстракция Sequence (последовательность).
-                        Ее можно рассматривать как список и любой другой тип коллекции может быть приведен к последовательности.
-                        Большинство внутренних функций ClojureScript работают именно с последовательностями.
-                        При вызове они делают последовательности из своих аргументов и работают уже с ними.
-                        Таким образом эти функции можно вызывать на любом sequable типе данных.
-                        Это также позволяет опускать проверки на пустые коллекции и NIL, поскольку для них
-                        будет просто создана пустая последовательность.
-
-                        И еще одна особенность - большая часть функций возвращает ленивые последовательности, это
-                        хорошо сказывается на производительности, но в некоторых местах может поставить в ступор (например,
-                        оптимизации реакта могут не работать).
-                    </aside>
                 </section>
             </section>
             <section>
@@ -270,14 +187,6 @@
                     <p>
                         Clojurescript allows you to write code that writes code (macros).
                     </p>
-                    <aside class="notes">
-                        Как уже было сказано, Clojure - диалект LISP-а. Такое дизайнерское решение было принято для того,
-                        чтобы унаследовать от LISP-а способность расширять код. Этому служит система макрокоманд или макросов - по сути, это код, который пишет код.
-                        Макрос - это символьное имя, которое заменяется препроцессором на набор инструкций, которые были определены этим макросом. Также макрос может
-                        принимать аргументы, иметь ветвление и прочее. Макропрограммирование позволяет расширять язык, делать его более выразительным, убирать из кода
-                        рутинные шаблоны. Инструмент довольно мощный, но на практике используется не так часто - не стоит переписывать каждый повторяющийся кусок кода на макросы -
-                        их сложно дебажить, сложно понять, что и где пошло не так и прочее. Обычно они используются в библиотеках или для оборачивания самих библиотек (в случае JS). 
-                    </aside>
                 </section>
                 <section>
                     <h4>Macros</h4>
@@ -295,11 +204,9 @@
                         </code>
                     </pre>
                     <aside class="notes">
-                        Здесь изображен очень примитивный пример макроса. В ClojureScript нет операторов, только функции, поэтому для сложения используется префиксная форма.
-                        Если слишком уж заскучали за инфиксной формой, то можно написать свой макрос.
-                        Как я уже говорил, макросы удобны для оборачивания JS либ. Мы, например, юзаем макросы для styled-components,
-                        чтобы шаблонизатор темплейтов из Реакта, понимал, как надо парсить стилизованные компоненты).
-                        Также макросы могут быть полезны для упрощения больших кусков кода.
+                        For example, we are using macros for styled-components library.
+                        Without it our React wrappers' template engine cannot understand and parse wrapped components
+                        (to avoid direct calls to React.createElement).
                     </aside>
                 </section>
                 <section data-auto-animate>
@@ -332,12 +239,6 @@
                                    54)
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Часто используемые макросы, которые живут в коре языка, - потоковые макросы.
-                        Есть несколько разновидностей таких макросов, и мы со всеми познакомимся :troll:
-                        Thread-first макрос (извините, не смог перевести) служит для подстановки первого аргумента.
-                        Первым аргументом служит результат вызова предыдущей функции.
-                    </aside>
                 </section>
                 <section>
                     <h4>Threading macros</h4>
@@ -356,10 +257,6 @@
                             => (3 5)
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Thread-last макрос служит для подстановки последнего аргумента.
-                        Последним аргументом по аналогии служит результат вызова предыдущей функции.
-                    </aside>
                 </section>
                 <section>
                     <h4>Threading macros</h4>
@@ -379,11 +276,6 @@
                             => (3 5)
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Thread-as макрос аналогично служит для подстановки аргумента, но не первого или последнего, а того, что конкретно нужен.
-                        Более громоздкая конструкция, но позволяет включать в себя функции, в которых интересующий нас аргумент входит на различных
-                        позициях.
-                    </aside>
                 </section>
                 <section>
                     <h4>Threading macros</h4>
@@ -403,9 +295,6 @@
                             => nil
                         </code>
                     </pre>
-                    <aside class="notes">
-                        2 макроса аналогичных thread-first и thread-last, но в отличии от последних останавливают вычисления на инструкции, которая вернула NIL.
-                    </aside>
                 </section>
                 <section>
                     <h4>Threading macros</h4>
@@ -427,9 +316,6 @@
                             => ["Capricornus" "You would be unstoppable as the moon forms an energetic alignment to driven Mars"]
                         </code>
                     </pre>
-                    <aside class="notes">
-                        2 макроса аналогичных thread-first и thread-last, но в отличии от последних могут по условию пропускать некоторые вычисления.
-                    </aside>
                 </section>
             </section>
             <section>
@@ -441,17 +327,6 @@
                         </div>
                         <img src="/examples/assets/transducer.gif" alt="transducer">
                     </div>
-                    <aside class="notes">
-                        Трансдьюсер - это огонь! Это функция, которая принимает редьюсер и возвращает редьюсер с дополнительным поведением.
-                        Трансдьюсеры знакомы многим, например, операторы RxJS - трансдьюсеры.
-                        Их преимущества:
-                         - прекрасно работают с композицией функций (их сигнатура позволяет это делать, а сигнатура редьюсера - нет)
-                         - могут использоваться для любых перечисляемых типов (массивы, деревья, потоки, графы) - они знают, как обработать элемент и передать его дальше, им нет разницы,
-                         частью чего этот элемент является.
-                         - все равно, ленивые вычисления или же жадные
-                         - эффективные для больших коллекций (или даже бесконечных потоков) - проходят по коллекции лишь единожды независимо от количества
-                         операций в пайплайне.
-                    </aside>
                 </section>
                 <section data-auto-animate>
                     <pre data-id="code-animation">
@@ -480,40 +355,16 @@
                             => [3 5]
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Тут показан пример довольно простого трансдьюсера.
-                        Если учесть, что композиция работает справа налево,
-                        то сначала может показаться как-будто порядок операций нарушен,
-                        нам ведь нужно маппинг, потом фильтрация, потом выбор 2 первых элементов.
-                        Но, по сути, все трансдьюсеры, принимая редьюсер, либо вызывают его от обработанных на месте аргументов, либо вообще не вызывают (filter, take).
-                        Т.е. порядок меняется автоматически.
-
-                        Многие функции ClojureScript принимают трансдьюсеры.
-                        Также можно без проблем писать свои трансдьюсеры, с промежуточным состоянием или без.
-                    </aside>
                 </section>
                 <section>
                     <h4>Transducers</h4>
                     <img src="/examples/assets/transducer-from-the-box.png" alt="ClojureScript functions as transducers" width="800" />
-                    <aside class="notes">
-                        На прошлом слайде мы использовали map/filter/take, но почему они вообще работают как редьюсеры? Это ведь обычные функции для обработки коллекций.
-                        Для этих функций под капотом есть 2 версии. Если переданы все аргументы, то это обработчик коллекции, если аргумента коллекции нет, то трансдьюсер
-                        (в документации для каждой такой функции есть примечание).
-                    </aside>
                 </section>
             </section>
             <section>
                 <section>
                     <h4>Performance</h4>
                     <img src="examples/assets/compiler.png" alt="compilation flow" width="300">
-                    <aside class="notes">
-                        Компилятор ClojureScript производит код, совместимый с прогрессивным режимом оптимизирующего компилятора Google Closure. Слишком много компиляторов :D
-                        Clojure компилятор - инструмент для оптимизации JS кода за счет полной потери читабельности) Был разработан для Gmail, Google Docs, Google Maps.
-                        Легенда гласит, что изначально писали на JS, экономя где только можно, но код выходил абсолютно не читаемым, тогда было решено сделать свой компилятор,
-                        а сам код писать красивым и понятным. Также из коробки поддерживается tree-shaking.
-                        Все, что требуется от разработчика, для того, чтобы пнуть компилятор - выставить
-                        флаг :advanced в конфигурации проекта для production.
-                    </aside>
                 </section>
                 <section>
                     <pre>
@@ -540,10 +391,6 @@
                             );
                         </code>
                     </pre>
-                    <aside class="notes">
-                        Тут приведен пример мега простой конструкции и того, как она выглядит после прохода компиляции, но еще до минификации.
-                        Получается не особо красиво.
-                    </aside>
                 </section>
             </section>
             <section>
@@ -560,21 +407,10 @@
                     <img src="examples/assets/reagent.png" alt="reagent" width="200">
                     <img src="examples/assets/re-frame.png" alt="re-frame" width="200">
                 </div>
-                <aside class="notes">
-                    В отличии от JS в ClojureScript намного меньше библиотек.
-                    Нужно установить ClojureScript зависимость - берем Leiningen, там же описываем скрипты.
-                    Нужен сборщик модулей - берем shadow-cljs (не надо выбирать между webpack, browserify, rollup, parcel и десятком других).
-                    Хочешь писать на фреймворке - есть обертки для реакта (на данный момент самая популярная Reagent, есть еще пара штук).
-                    Нужен менеджер состояния - берем re-frame (испытал влияние Redux и архитектуры Elm,
-                    умеет хендлить сайд эффекты, не надо саги педалить, намного меньше шаблонного кода).
-                </aside>
             </section>
             <section>
                 <h3>There is always a fly in the ointment</h3>
                 <img src="examples/assets/fly-in-ointment.jpeg" alt="cons" width="600">
-                <aside class="notes">
-                    Поговорим о недостатках. Приходилось выдавливать их из себя, потому что вообще-то ClojureScript топовый)
-                </aside>
             </section>
             <section>
                 <h4>Bundle size</h4>
@@ -585,126 +421,86 @@
                     RealWorld Comparison 2020
                 </a>
                 <aside class="notes">
-                    У ClojureScript есть свой runtime, понятное дело, что это добавляет к размеру бандла еще лишние килобайты.
-                    Если сравнивать с JS, то это довольно заметно для маленьких проектов, но чем проект больше,
-                    тем большим количеством каких-то вспомогательных библиотек он обрастает (lodash, ramda, rxjs etc.).
-                    В проектах на ClojureScript библиотек зачастую меньше (язык из коробки предоставляет много возможностей).
-                    Плюс к тому эффективный tree-shaking из коробки у shadow-cljs и по исследованию "RealWorld Comparison" бандл среднего
-                    по размерам проекта на ClojureScript меньше бандла аналогичного проекта, но написанного на ReactJS.
+                    RealWorld is an example of mid-size application to compare different frameworks/languages.
+                    Here is a screen of RealWorld Clojure/Reagent applications' bundle size. 
                 </aside>
             </section>
             <section>
                 <h4>Performance</h4>
                 <img src="examples/assets/performance.jpeg" alt="performance" width="500">
-                <aside class="notes">
-                    Преобразования данных из CLJS в JS и обратно довольно дорогостоящие.
-                    При использовании библиотек из JS это может стать проблемой.
-                </aside>
             </section>
             <section>
                 <h4>Memory</h4>
                 <img src="examples/assets/memory-leaks.png" alt="memory leaks" width="500">
-                <aside class="notes">
-                    ClojureScript использует довольно много памяти.
-                    Обычно это связано с персистентностью коллекций и ленивыми вычислениями
-                    (возможно, Garbage Collector не понимает, можно ли удалять данные, которые, по факту, уже не используются -
-                    к сожалению, тут я не накопал ничего более конкретного).
-                    Ленивые вычисления работают на замыканиях, есть первый элемент и правило, по которому вычисляется следующий,
-                    к тому же у ленивых коллекций есть проблема со стек трейсами ошибок - непонятно, когда именно будет вычислен следующий элемент и в каком контексте.
-                </aside>
             </section>
             <section>
                 <h4>Dynamic type system</h4>
                 <img src="examples/assets/dynamic-typing.jpeg" alt="dynamic type system" width="400">
-                <aside class="notes">
-                    Тут на вкус и цвет товарищей нет. Лично я от ее отсутствия не особо страдаю,
-                    да и тот факт, что в рантайме все равно ничего не останется, отталкивает от нее.
-                    С Elm-ом и его JSON энкодерами и декодерами работать приятно, с TS-ом просто норм, ни больше ни меньше.
-                </aside>
             </section>
             <section>
                 <h4>Support</h4>
                 <img src="examples/assets/8-years.png" alt="8 years to fix performance issue" width="300">
                 <a style="display:block" href="https://www.clojuriststogether.org/" target="_blank">clojurists together</a>
-                <aside class="notes">
-                    Коммьюнити в ClojureScript несколько меньше чем в JS. Иногда можно заметить, как уходят годы на фикс бага в коре
-                    или же библиотеку перестают поддерживать). Но тут все не так плохо: люди говорят, что если давно не было коммитов,
-                    то, значит, все хорошо, и оно и так работает. Существует фонд поддержки разработчиков наиболее важных библиотек на Clojure.
-                    Ребята проводят опросы и выясняют, какие библиотеки наиболее полезны, а потом спонсируют их дальнейшую разработку.
-                    Также вcе следят за обратной совместимостью, например, текущая версия ClojureScript 1.10.879, аналогично обычно состоит
-                    ситуация и для библиотек. Все продумано и стабильно)
-                </aside>
             </section>
             <section>
                 <h4>No popular source of knowledge</h4>
                 <p>JS - please, read the documentation, there are also learnjavascript, tonns of "Learn JS in 10 mins", video courses, books, blog posts etc.</p>
                 <p>ClojureScript - hmm... we have Cheatsheet, maybe some API docs, 2-3 books (it's difficult to find, but you should try!)</p>
-                <aside class="notes">
-                    Намного меньше учебных материалов по сравнению с более популярными языками делает ClojureScript не то чтобы
-                    сложным для изучения, но всегда надо что-то искать)
-                </aside>
             </section>
             <section>
                 <h4>Job opportunities</h4>
                 <p>It's difficult both to find a job and to hire</p>
                 <img src="examples/assets/difficult-choice.png" alt="how to get a CLJS job" width="320">
-                <aside class="notes">
-                    На самом деле, это шутка, есть хорошие компании, в которых используется ClojureScript)
-                    А отсутствие популярности вызвано отсутствием маркетинговых компаний, язык то топовый :)
-                </aside>
             </section>
             <section>
                 <section>
                     <h4>How and why we use ClojureScript in production</h4>
                     <img src="examples/assets/attendify-slide.png" alt="Attendify app" width="800">
                     <aside class="notes">
-                        Наш продукт, а рассказывать я буду про продукт Attendify (с ним больше знаком), - платформа для онлайн конференций, вебинаров и прочих активностей.
-                        Сцены с видео трансляциями, записи предыдущих сессий, чаты, стенды спонсоров и прочее.
-                        Сервер написан на Clojure, фронтенд на ClojureScript.
+                        I will talk about Attendifys' product (as I know it better). It's the platform for online conferences, webinars and other activities.
+                        Stages with video broadcasting, recordings of previous sessions, chats, sponsors stands etc.
+                        Server is written in Clojure, frontend in ClojureScript.
                     </aside>
                 </section>
                 <section>
                     <h4>We all write Clojure</h4>
                     <img src="examples/assets/full-stack.jpeg" width="500" alt="full-stack developer">
                     <aside class="notes">
-                        Можно переиспользовать код, взять совет у ребят с бекенда, посадить их писать фронтенд :D
+                        We can reuse code, ask for help backend engineers, force them to write some frontend :D
                     </aside>
                 </section>
                 <section>
                     <h4>ClojureScript is an awesome tool to make things fast</h4>
                     <img src="examples/assets/fast.png" width="500" alt="fasten development">
                     <aside class="notes">
-                        Разработка на ClojureScript, по моим наблюдениям, идет быстрее чем на JS. Код более лаконичный, много мощных инструментов,
-                        которые не надо искать по библиотекам или же писать самому.
+                        IMO, development with ClojureScript is faster than with plain old JS. Code is concise,
+                        there are a lot of powerful tools (that you don't need to look for in some libraries or write by yourself).
                     </aside>
                 </section>
                 <section>
                     <h4>Performance</h4>
                     <img src="examples/assets/attendify-slide-2.png" alt="Attendify" width="700">
                     <aside class="notes">
-                        На одном мероприятии на платформе одновременно может быть около 10к пользователей.
-                        Просмотр сессий, общение в чате, знакомства со спонсорами и другими участниками.
-                        Большее число поддерживать сложнее, но тут вопрос, скорее, не в Clojure, а в решениях,
-                        которые были приняты при разработке платформы. В то время был совсем неочевидным факт, что на
-                        онлайн события будут сходиться не десятки, но даже сотни тысяч людей.
+                        One event can host about 10K attendees.
+                        Watching of sessions, communication in chats, acquaintance with sponsors and other attendees.
+                        It's difficult to support more attendees but not because of Clojure, I think it's more about
+                        some design decisions that were made long time ago.
                     </aside>
                 </section>
                 <section>
                     <h4>Our stack</h4>
                     <p>Backend: Ring (HTTP requests), Compojure (routing), Aleph (framework), HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
                     <p>Frontend: Reagent/Rum + re-frame</p>
-                    <aside class="notes">
-                        RPC - удаленный вызов процедур.
-                    </aside>
                 </section>
                 <section>
                     <h4>How do we live in JS world?</h4>
                     <img src="examples/assets/webpack-module-federation.jpeg" alt="Webpack module federation plugin" width="400">
                     <aside class="notes">
-                        Как ClojureScript ведет себя в больших JS приложениях?
-                        В данный момент мы работаем над интеграцией ClojureScript приложения как микро-фронтенда. Продукт построен на микро-фронтендах-фичах
-                        и наш проект с помощью модуля Webpack Federation встраивается в существующую структуру. При этом между микро-фронтендами шарятся общие зависимости.
-                        ClojureScript, полет нормальный. 
+                        How is ClojureScript functioning in large JS applications?
+                        Now we are working on integration of ClojureScript application as micro-frontend.
+                        The product is built as collection of micro-frontends for different features.
+                        And our application with the help of Webpack Federation module would be the part of existing structure.
+                        By the way we even can share some common dependencies between different applications (for example React).
                     </aside>
                 </section>
             </section>
@@ -739,7 +535,7 @@
             hash: true,
 
             // for PDF printing
-            // showNotes: 'separate-page',
+            showNotes: 'separate-page',
 
             // Learn about plugins: https://revealjs.com/plugins/
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
