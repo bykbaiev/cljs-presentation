@@ -506,6 +506,14 @@
                 <section>
                     <h4>Performance</h4>
                     <img src="examples/assets/compiler.png" alt="compilation flow" width="300">
+                    <aside class="notes">
+                        Компилятор ClojureScript производит код, совместимый с прогрессивным модом оптимизирующего компилятора Google Closure. Слишком много компиляторов :D
+                        Clojure компилятор - инструмент для оптимизации JS кода за счет полной потери читабельности) Был разработан для Gmail, Google Docs, Google Maps.
+                        Легенда гласит, что изначально писали на JS, экономя где только можно, но код выходил абсолютно не читаемым, тогда было решено сделать свой компилятор,
+                        а сам код писать красивым и понятным. Также из коробки поддерживается tree-shaking.
+                        Все, что требуется от разработчика, для того, чтобы пнуть компилятор - выставить
+                        флаг :advanced в конфигурации проекта для production.
+                    </aside>
                 </section>
                 <section>
                     <pre>
@@ -532,13 +540,17 @@
                             );
                         </code>
                     </pre>
+                    <aside class="notes">
+                        Тут приведен пример мега простой конструкции и того, как она выглядит после прохода компиляции.
+                        Получается не особо красиво.
+                    </aside>
                 </section>
             </section>
             <section>
                 <h4>Ecosystem</h4>
                 <ul>
-                    <li>Leiningen ~ package.json (dependencies + scripts)</li>
-                    <li>shadow-cljs ~ webpack</li>
+                    <li>Leiningen ~ npm (dependencies + scripts)</li>
+                    <li>shadow-cljs ~ module bundler</li>
                     <li>Reagent/Om/Rum - React wrappers</li>
                     <li>Re-frame - Redux on steroids</li>
                 </ul>
@@ -548,6 +560,14 @@
                     <img src="examples/assets/reagent.png" alt="reagent" width="200">
                     <img src="examples/assets/re-frame.png" alt="re-frame" width="200">
                 </div>
+                <aside class="notes">
+                    В отличии от JS в ClojureScript намного меньше библиотек.
+                    Нужно установить ClojureScript зависимость - берем Leiningen, там же описываем скрипты.
+                    Нужен сборщик модулей - берем shadow-cljs (не надо выбирать между webpack, browserify, rollup, parcel и десятком других).
+                    Хочешь писать на фреймворке - есть обертки для реакта (на данный момент самая популярная Reagent, есть еще пара штук).
+                    Нужен менеджер состояния - берем re-frame (испытал влияние Redux и архитектуры Elm,
+                    умеет хендлить сайд эффекты, не надо саги педалить, намного меньше шаблонного кода).
+                </aside>
             </section>
             <section>
                 <h3>There is always a fly in the ointment</h3>
@@ -588,6 +608,8 @@
                     ClojureScript использует довольно много памяти.
                     Обычно это связано с персистентностью коллекций и ленивыми вычислениями
                     (Garbage Collector не понимает, можно ли удалять данные, которые, по факту, уже не используются).
+                    Ленивые вычисления работают на замыканиях, есть первый элемент и правило, по которому вычисляется следующий,
+                    к тому же у ленивых коллекций есть проблема со стек трейсами ошибок - непонятно, когда именно будет вычислен следующий элемент и в каком контексте.
                 </aside>
             </section>
             <section>
@@ -596,7 +618,7 @@
                 <aside class="notes">
                     Тут на вкус и цвет товарищей нет. Лично я от ее отсутствия не особо страдаю,
                     да и тот факт, что в рантайме все равно ничего не останется, отталкивает от нее.
-                    С Elm-ом и его JSON сериалайзерами работать приятно, с TS-ом просто норм, ни больше ни меньше.
+                    С Elm-ом и его JSON энкодерами и декодерами работать приятно, с TS-ом просто норм, ни больше ни меньше.
                 </aside>
             </section>
             <section>
@@ -634,14 +656,26 @@
                 <section>
                     <h4>How and why we use ClojureScript in production</h4>
                     <img src="examples/assets/attendify-slide.png" alt="Attendify app" width="800">
+                    <aside class="notes">
+                        Наш продукт, а рассказывать я буду про продукт Attendify (с ним больше знаком), - платформа для онлайн конференций, вебинаров и прочих активностей.
+                        Сцены с видео трансляциями, записи предыдущих сессий, чаты, стенды спонсоров и прочее.
+                        Сервер написан на Clojure, фронтенд на ClojureScript.
+                    </aside>
                 </section>
                 <section>
                     <h4>We all write Clojure</h4>
                     <img src="examples/assets/full-stack.jpeg" width="500" alt="full-stack developer">
+                    <aside class="notes">
+                        Можно переиспользовать код, взять совет у ребят с бекенда, посадить их писать фронтенд :D
+                    </aside>
                 </section>
                 <section>
                     <h4>ClojureScript is an awesome tool to make things fast</h4>
                     <img src="examples/assets/fast.png" width="500" alt="fasten development">
+                    <aside class="notes">
+                        Разработка на ClojureScript, по моим наблюдениям, идет быстрее чем на JS. Код более лаконичный, много мощных инструментов,
+                        которые не надо искать по библиотекам или же писать самому.
+                    </aside>
                 </section>
                 <section>
                     <h4>Performance</h4>
@@ -657,11 +691,17 @@
                 <section>
                     <h4>Our stack</h4>
                     <p>Backend: Ring, Compojure (routing), Aleph, HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
-                    <p>Frontend: Reagent/Rum (React wrappers) + re-frame/own state management solution (analogue of</p>
+                    <p>Frontend: Reagent/Rum + re-frame</p>
                 </section>
                 <section>
                     <h4>How do we live in JS world?</h4>
                     <img src="examples/assets/webpack-module-federation.jpeg" alt="Webpack module federation plugin" width="400">
+                    <aside class="notes">
+                        Как ClojureScript ведет себя в больших JS приложениях?
+                        В данный момент мы работаем над интеграцией ClojureScript приложения как микро-фронтенда. Продукт построен на микро-фронтендах-фичах
+                        и наш проект с помощью модуля Webpack Federation встраивается в существующую структуру. При этом между микро-фронтендами шарятся общие зависимости.
+                        ClojureScript, полет нормальный. 
+                    </aside>
                 </section>
             </section>
             <section>
