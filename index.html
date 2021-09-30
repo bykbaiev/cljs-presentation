@@ -403,9 +403,9 @@
                             => nil
                         </code>
                     </pre>
-                    <div class="notes">
+                    <aside class="notes">
                         2 макроса аналогичных thread-first и thread-last, но в отличии от последних останавливают вычисления на инструкции, которая вернула NIL.
-                    </div>
+                    </aside>
                 </section>
                 <section>
                     <h4>Threading macros</h4>
@@ -427,9 +427,9 @@
                             => ["Capricornus" "You would be unstoppable as the moon forms an energetic alignment to driven Mars"]
                         </code>
                     </pre>
-                    <div class="notes">
+                    <aside class="notes">
                         2 макроса аналогичных thread-first и thread-last, но в отличии от последних могут по условию пропускать некоторые вычисления.
-                    </div>
+                    </aside>
                 </section>
             </section>
             <section>
@@ -441,7 +441,7 @@
                         </div>
                         <img src="/examples/assets/transducer.gif" alt="transducer">
                     </div>
-                    <div class="notes">
+                    <aside class="notes">
                         Трансдьюсер - это огонь! Это функция, которая принимает редьюсер и возвращает редьюсер с дополнительным поведением.
                         Трансдьюсеры знакомы многим, например, операторы RxJS - трансдьюсеры.
                         Их преимущества:
@@ -451,7 +451,7 @@
                          - все равно, ленивые вычисления или же жадные
                          - эффективные для больших коллекций (или даже бесконечных потоков) - проходят по коллекции лишь единожды независимо от количества
                          операций в пайплайне.
-                    </div>
+                    </aside>
                 </section>
                 <section data-auto-animate>
                     <pre data-id="code-animation">
@@ -691,8 +691,11 @@
                 </section>
                 <section>
                     <h4>Our stack</h4>
-                    <p>Backend: Ring, Compojure (routing), Aleph, HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
+                    <p>Backend: Ring (HTTP requests), Compojure (routing), Aleph (framework), HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
                     <p>Frontend: Reagent/Rum + re-frame</p>
+                    <aside class="notes">
+                        RPC - удаленный вызов процедур.
+                    </aside>
                 </section>
                 <section>
                     <h4>How do we live in JS world?</h4>
@@ -736,7 +739,7 @@
             hash: true,
 
             // for PDF printing
-            showNotes: 'separate-page',
+            // showNotes: 'separate-page',
 
             // Learn about plugins: https://revealjs.com/plugins/
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
