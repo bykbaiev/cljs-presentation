@@ -32,6 +32,14 @@
         .left-column {
             padding-right: 1rem;
         }
+
+        .right-column {
+            padding-left: 1rem;
+        }
+
+        .text-28 {
+            font-size: 28px;
+        }
     </style>
 
     <div class="reveal">
@@ -158,11 +166,8 @@
                         (linked list under the hood).
                     </p>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3,6-8">
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3-5">
                             (def list' '(1 2 3 4))
-
-                            (list' 0)
-                            => 1
 
                             (let [xs '(1 2 3)     ;; (1 2 3)
                                   ys (cons 0 xs)] ;; (0 1 2 3)
@@ -177,8 +182,6 @@
                         В основном, списки в ClojureScript используются для группирования символов в программы -
                         вызов функции, например, это тоже список. Для хранения данных обычно используют другие коллекции в отличии от Lisp-а,
                         где все на списках. Такое решение было принятно при разработке языка для упрощения читаемости.
-
-                        Следует заметить, что структуру данных можно использовать как функцию от ее ключа.
 
                         Также тут можно посмотреть на пример structural sharing-а. Был создан новый список ys путем добавления нуля в начало списка xs. Но если сравнить xs с
                         rest от ys (хвост списка, все элементы кроме первого), то получится один и тот же список.
@@ -199,6 +202,7 @@
                     </pre>
                     <aside class="notes">
                         Вектор - эффективный доступ к элементу по индексу, добавление в конец, Аналог массива.
+                        Следует заметить, что ассоциативную структуру данных можно использовать как функцию от ее ключа.
                     </aside>
                 </section>
                 <section>
@@ -233,7 +237,9 @@
                         Set stores zero or more unique items of any type and is unordered.
                     </p>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3,6">
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3,5,8|11,14,17|20,23">
+                            (require '[clojure.set :as s])
+
                             (def set' #{1 2 3 10})
                         
                             (set' 0)
@@ -241,6 +247,21 @@
 
                             (set' 10)
                             => 10
+
+                            (s/union #{0 1 2} #{1 2 3})
+                            => #{0 1 2 3}
+
+                            (s/difference #{0 1 2} #{1 2 3})
+                            => #{0}
+
+                            (s/intersection #{0 1 2} #{1 2 3})
+                            => #{1 2}
+
+                            (s/select odd? #{0 1 2})
+                            => #{1}
+
+                            (filter odd? #{0 1 2})
+                            => (1)
                         </code>
                     </pre>
                     <aside class="notes">
@@ -332,7 +353,8 @@
                     </aside>
                 </section>
                 <section>
-                    <h4>Macros</h4>
+                    <h4>Macros for styled components</h4>
+                    <p>JS</p>
                     <pre>
                         <code class="language-js" data-trim data-noescape data-line-numbers="1-7,9-11">
                             <script type="text/template">
@@ -350,8 +372,12 @@
                             </script>
                         </code>
                     </pre>
+                </section>
+                <section>
+                    <h4>Macros for styled components</h4>
+                    <p>CLJS</p>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1-7,9">
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1-7,9,11-14">
                             (defstyled sub-item-number
                                        :span
                                        {:flex (str "0 0 " (polished/rem 54))
@@ -361,6 +387,11 @@
                                         :text-overflow "ellipsis"})
                             ...
                             (sub-item-number "123")
+                            ...
+                            (js/React.createElement
+                                (-> component meta :react-component)
+                                #js {}
+                                "123")
                         </code>
                     </pre>
                 </section>
@@ -562,7 +593,7 @@
                     <h4>Transducers</h4>
                     <img src="/examples/assets/transducer-from-the-box.png" alt="ClojureScript functions as transducers" width="800" />
                     <aside class="notes">
-                        На прошлом слайде мы использовали map/filter/take, но почему они вообще работают как редьюсеры? Это ведь обычные функции для обработки коллекций.
+                        На прошлом слайде мы использовали map/filter/take, но почему они вообще работают как трансдьюсеры? Это ведь обычные функции для обработки коллекций.
                         Для этих функций под капотом есть 2 версии. Если переданы все аргументы, то это обработчик коллекции, если аргумента коллекции нет, то трансдьюсер
                         (в документации для каждой такой функции есть примечание).
                     </aside>
@@ -693,8 +724,8 @@
                 <img src="examples/assets/8-years.png" alt="8 years to fix performance issue" width="300">
                 <a style="display:block" href="https://www.clojuriststogether.org/" target="_blank">clojurists together</a>
                 <aside class="notes">
-                    Коммьюнити в ClojureScript несколько меньше чем в JS. Но тут все не так плохо: люди говорят, что если давно не было коммитов,
-                    то, значит, все хорошо, и оно и так работает. Существует фонд поддержки разработчиков наиболее важных библиотек на Clojure.
+                    Коммьюнити в ClojureScript несколько меньше чем в JS. Поэтому меньше и библиотек, и активности в них.
+                    Но тут все не так однозначно. Существует фонд поддержки разработчиков наиболее важных библиотек на Clojure.
                     Ребята проводят опросы и выясняют, какие библиотеки наиболее полезны, а потом спонсируют их дальнейшую разработку.
                     Также вcе следят за обратной совместимостью, например, текущая версия ClojureScript 1.10.879, аналогично обычно состоит
                     ситуация и для библиотек. Все продумано и стабильно).
@@ -749,10 +780,16 @@
                 </section>
                 <section>
                     <h4>Performance</h4>
-                    <img src="examples/assets/attendify-slide-2.png" alt="Attendify" width="700">
+                    <div class="columns2">
+                        <div class="left-column">
+                            <p class="text-28">Onsite events - up to 10k attendees</p>
+                            <p class="text-28">Virtual events - up to 5k attendees</p>
+                        </div>
+                        <img src="examples/assets/attendify-slide-2.png" alt="Attendify" width="500">
+                    </div>
                     <aside class="notes">
                         Приложение поддерживает события вживую и виртуальные. На виртуальных пользователь просматривает видео сессию, на событиях вживую присутствует в зале лично.
-                        Все остальное работает аналогично: публикация сообщений для всех, приватное общение в чате, просмотр контента и расписания, голосования, пуш нотификации,
+                        Все остальное работает аналогично: публикация публичных сообщений, приватное общение в чате, просмотр контента и расписания, голосования, пуш нотификации,
                         закладки, заметки, оценки.
 
                         Для событий вживую платформа может поддерживать 10к пользователей
@@ -769,8 +806,8 @@
                 </section>
                 <section>
                     <h4>Our stack</h4>
-                    <p>Backend: Ring (HTTP requests), Compojure (routing), Aleph (framework), HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
-                    <p>Frontend: Reagent/Rum + re-frame</p>
+                    <p class="text-28">Backend: Ring (HTTP requests), Compojure (routing), Aleph (framework), HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
+                    <p class="text-28">Frontend: Reagent/Rum + re-frame</p>
                     <aside class="notes">
                         RPC - удаленный вызов процедур.
                     </aside>
@@ -780,7 +817,7 @@
                     <img src="examples/assets/webpack-module-federation.jpeg" alt="Webpack module federation plugin" width="400">
                     <aside class="notes">
                         Как ClojureScript ведет себя в больших JS приложениях?
-                        В данный момент мы работаем над интеграцией ClojureScript приложения как микро-фронтенда. Продукт Hopin построен на микро-фронтендах-фичах
+                        В данный момент мы работаем над интеграцией ClojureScript приложения как микро-фронтенда. Продукт Hopin построен на микро-фронтендах-фичах,
                         и наш проект с помощью модуля Webpack Federation встраивается в существующую структуру. При этом между микро-фронтендами шарятся общие зависимости.
                         ClojureScript, полет нормальный. 
                     </aside>
