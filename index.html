@@ -19,13 +19,18 @@
 <body>
     <style>
         .columns2 {
-            display:flex;
-            align-items:center;
+            display: flex;
+            align-items: center;
         }
 
         .columns {
-            display:flex;
-            align-items:center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .columns-top {
+            display: flex;
             justify-content: space-between;
         }
 
@@ -63,7 +68,7 @@
                     Note:
                     В данный момент я работаю в компании Hopin,
                     до этого работал в Attendify,
-                    пока в июле этого года компанию не приобрели.
+                    пока в июле этого года Hopin не приобрел компанию.
                 </textarea>
             </section>
             <section data-markdown>
@@ -82,15 +87,15 @@
                 <h3>ClojureScript, what is it??</h3>
                 <div class="columns2">
                     <div class="left-column">
-                        Clojure is a compiled, functional and dynamically typed language that targets multiple existing runtimes.
+                        Clojure is a dynamically typed Lisp for JVM.
                         </br>
-                        ClojureScript is a compiler for Clojure that targets JavaScript.
+                        ClojureScript is same for JavaScript.
                     </div>
                     <img src="examples/assets/logo.png" alt="cljs logo" width="250" height="250"/>
                 </div>
                 <aside class="notes">
                     Clojure - компилируемый, функциональный и динамически типизированный язык программирования,
-                    который может использоваться на различных платформах (даже .NET CLR). Также это современный диалект Lisp-а:
+                    который может использоваться на различных платформах. Также это современный диалект Lisp-а:
                     много скобок, философия кода как данных и мощная система макросов.
 
                     ClojureScript - это компилятор из Clojure в JavaScript.
@@ -124,20 +129,20 @@
                     чистоты)
                 </textarea>
             </section>
-            <section data-markdown data-separator-notes="^Note:">
-                <textarea data-template>
-                    ### REPL (Read–eval–print loop)
-                    <img src="examples/assets/repl.gif" alt="REPL" width="700">
-                    Note:
+            <section>
+                <h3>REPL (Read–eval–print loop)</h3>
+                <video class="r-stretch" src="examples/assets/repl.mov" type="video/mp4" controls></video>
+                <aside class="notes">
                     Цикл "чтение - вычисление - вывод".
                     Любой код можно выполнить прямо в редакторе простой комбинацией клавиш.
                     Это упрощает изучение языка, всегда можно, не отходя от кассы, протестировать
                     какой-то метод или кусочек кода за 0 и прочее.
-                    Но еще большую пользу REPL приносит в работе: REPL сервер напрямую связан с проектом, таким
-                    образом он не только может исполнять куски кода, но и использовать соответствующее состояние моего
-                    приложения. Таким образом я могу посмотреть на данные из хранилища, вызвать какой-либо эффект и посмотреть,
+                    Но еще большую пользу REPL приносит в работе: REPL сервер запускается непосредственно в приложении
+                    и, по-сути, работает как очень удобный remote debugger, таким образом он не только может исполнять куски кода,
+                    но и использовать соответствующее состояние моего
+                    приложения. А я, благодаря этому, могу посмотреть на данные из хранилища, вызвать какой-либо эффект и посмотреть,
                     как поменяется UI в браузере.
-                </textarea>
+                </aside>
             </section>
             <section>
                 <section>
@@ -184,7 +189,7 @@
                         где все на списках. Такое решение было принятно при разработке языка для упрощения читаемости.
 
                         Также тут можно посмотреть на пример structural sharing-а. Был создан новый список ys путем добавления нуля в начало списка xs. Но если сравнить xs с
-                        rest от ys (хвост списка, все элементы кроме первого), то получится один и тот же список.
+                        rest от ys (хвост списка, все элементы кроме первого), то получится один и тот же объект.
                     </aside>
                 </section>
                 <section>
@@ -227,14 +232,15 @@
                     <aside class="notes">
                         Map - коллекция, которая позволяет сохранять пары ключ-значение.
                         В других языках это называют хэш-меп или словарь. Любая структура данных может использоваться
-                        как ключ мапы, но зачастую используют кейворды - объекты, которые всегда равны сами себе, - из-за
-                        того, что они могут быть использованы в качестве функции.
+                        как ключ мапы, но зачастую используют кейворды - объекты, которые гарантированно будут созданы в программе единожды,
+                        поэтому их можно сравнивать по ссылке, а не по значению. А используют для ключей Map их из-за
+                        того, что они также являются функциями.
                     </aside>
                 </section>
                 <section>
                     <h3>Set</h3>
                     <p>
-                        Set stores zero or more unique items of any type and is unordered.
+                        Set is unordered collection of unique items.
                     </p>
                     <pre>
                         <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3,5,8|11,14,17|20,23">
@@ -273,34 +279,39 @@
                 <section>
                     <h3>Seq</h3>
                     <pre>
-                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,4,7|10,13,16">
-                            (assoc [1 2 3] 0 9)
-                            => [9 2 3]
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,4,7,10|13,16|19,22">
+                            (map inc '(0 1 2))
+                            => (1 2 3)
 
-                            (assoc {:a 1 :b 2} :a 9)
-                            => {:a 9 :b 2}
+                            (map inc [0 1 2])
+                            => (1 2 3)
 
-                            (conj [1 2 3] 9)
-                            => [1 2 3 9]
+                            (map inc #{0 1 2})
+                            => (1 2 3)
 
-                            (conj '(1 2 3) 9)
-                            => (9 1 2 3)
+                            (map (comp inc second) {:a 0 :b 1 :c 2})
+                            => (3 2 1)
 
-                            (conj {:a 1 :b 2} [:c 3])
-                            => {:a 1 :b 2 :c 3}
+                            (into [] '(0 1 2))
+                            => [0 1 2]
 
-                            (conj #{1 2 3} 4)
-                            => #{1 2 3 4}
+                            (into [] {:a 1 :b 2})
+                            => [[:b 2] [:a 1]]
+
+                            (concat {:a 1 :b 2} {:b 3})
+                            => [[:b 2] [:a 1] [:b 3]]
+
+                            (into {} (concat {:a 1 :b 2} {:b 3}))
+                            => {:b 3 :a 1}
                         </code>
                     </pre>
                     <aside class="notes">
                         Также в ClojureScript есть абстракция Seq (последовательность).
-                        Ее можно рассматривать как список и любой другой тип коллекции может быть приведен к последовательности.
+                        Ее можно рассматривать как связный список и любой другой тип коллекции может быть приведен к последовательности.
                         Большинство внутренних функций ClojureScript работают именно с последовательностями.
-                        При вызове они делают последовательности из своих аргументов и работают уже с ними.
+                        При вызове они делают последовательности из своих аргументов, работают с ними и возвращают их.
                         Таким образом эти функции можно вызывать на любом sequable типе данных.
-                        Это также позволяет опускать проверки на пустые коллекции и NIL, поскольку для них
-                        будет просто создана пустая последовательность. С помощью этого же маханизма можно довольно просто преобразовывать коллекции
+                        С помощью этого же маханизма можно довольно просто преобразовывать коллекции
                         из одного вида в другой.
 
                         И еще одна особенность - большая часть функций возвращает ленивые последовательности, это
@@ -406,21 +417,21 @@
                                 :last-name "Bykbaiev"}
 
                             (-> user
-                                (update :full-name
-                                        #(str (:first-name %)
-                                                " "
-                                                (:last-name %)))
+                                (assoc :full-name
+                                        (str (:first-name user)
+                                             " "
+                                             (:last-name user)))
                                 (assoc :mental-age 54))
                             => {:first-name "Alex"
                                 :last-name  "Bykbaiev"
                                 :full-name  "Alex Bykbaiev"
                                 :mental-age 54}
 
-                            (assoc (update user
+                            (assoc (assoc user
                                            :full-name
-                                           #(str (:first-name %)
-                                                 " "
-                                                 (:last-name %))))
+                                           (str (:first-name user)
+                                                " "
+                                                (:last-name user))))
                                    :mental-age
                                    54)
                         </code>
@@ -605,7 +616,7 @@
                     <img src="examples/assets/compiler.png" alt="compilation flow" width="300">
                     <aside class="notes">
                         Компилятор ClojureScript производит код, совместимый с прогрессивным режимом оптимизирующего компилятора Google Closure. Слишком много компиляторов :D
-                        Clojure компилятор - инструмент для оптимизации JS кода за счет полной потери читабельности) Был разработан для Gmail, Google Docs, Google Maps.
+                        Google Closure компилятор - инструмент для оптимизации JS кода за счет полной потери читабельности) Был разработан для Gmail, Google Docs, Google Maps.
                         Легенда гласит, что изначально писали на JS, экономя где только можно, но код выходил абсолютно не читаемым, тогда было решено сделать свой компилятор,
                         а сам код писать красивым и понятным. Также из коробки поддерживается tree-shaking.
                         Все, что требуется от разработчика, для того, чтобы пнуть компилятор - выставить
@@ -691,12 +702,44 @@
                 </aside>
             </section>
             <section>
-                <h4>Performance</h4>
-                <img src="examples/assets/performance.jpeg" alt="performance" width="500">
-                <aside class="notes">
-                    Преобразования данных из CLJS в JS и обратно довольно дорогостоящие.
-                    При использовании библиотек из JS это может стать проблемой.
-                </aside>
+                <section>
+                    <h4>Performance</h4>
+                    <img src="examples/assets/performance.jpeg" alt="performance" width="500">
+                </section>
+                <section>
+                    <pre>
+                        <code class="language-clojure" data-trim data-noescape data-line-numbers="1,3,6,9-11,13">
+                            (require 'goog.object)
+    
+                            (def at-runtime (clj->js {:a {:b {:c 1}}}))
+                            => #js {:a #js {:b #js {:c 1}}}
+    
+                            (def at-compile-time #js {:a #js {:b #js {:c 1}}})
+                            => #js {:a #js {:b #js {:c 1}}}
+    
+                            (-> heavy-js-object
+                                (js->clj :keywordize-keys true)
+                                (get-in [:a :b :c]))
+    
+                            (goog.object/getValueByKeys heavy-js-object "a" "b" "c")
+                        </code>
+                    </pre>
+                    <q cite="https://cljs.github.io/api/cljs.core/js-GTclj">
+                        Note that js->clj is not optimized for speed and the transit.cljs library is recommended for parsing large amounts of JSON data.
+                    </q>
+                    <aside class="notes">
+                        Преобразования данных из CLJS в JS и обратно довольно дорогостоящие.
+                        При использовании библиотек из JS это может стать проблемой.
+    
+                        clj->js - это функция, которая рекурсивно переводит любую ClojureScript структуру даных в соответствующий тип даных в JS (массив или объект).
+                        Работает в рантайме. С другой стороны литералы #js{}, #js[] срабатывают при компиляции и создают JS литералы. Аналогично рекурсивно работает js->clj.
+
+                        Мы используем clj->js в обертках библиотек реакт компонентов (передаем пропсы в виде JS значений).
+                        js->clj используется, в основном, для обработки результатов запросов.
+    
+                        getValueByKeys из goog.object работает в сотни раз быстрее трансформации из JS в CLJS, а затем вытягивания одного элемента.
+                    </aside>
+                </section>
             </section>
             <section>
                 <h4>Memory</h4>
@@ -714,9 +757,9 @@
                 <h4>Dynamic type system</h4>
                 <img src="examples/assets/dynamic-typing.jpeg" alt="dynamic type system" width="400">
                 <aside class="notes">
-                    Тут на вкус и цвет товарищей нет. Лично я от ее отсутствия не особо страдаю,
-                    да и тот факт, что в рантайме все равно ничего не останется, отталкивает от нее.
-                    С Elm-ом и его JSON энкодерами и декодерами работать приятно, с TS-ом просто норм, ни больше ни меньше.
+                    Система типов дает больше возможностей написать код без ошибок,
+                    т.к. у тебя есть какая-никакая проверка. И это плюс в независимости от того есть ли они у тебя в рантайме или нет.
+                    Мне бы понравилась система Elm с его JSON энкодерами и декодерами, а с TS-ом просто неплохо.
                 </aside>
             </section>
             <section>
@@ -736,8 +779,28 @@
             </section>
             <section>
                 <h4>No popular source of knowledge</h4>
-                <p>JS - please, read the documentation, there are also learnjavascript, tonns of "Learn JS in 10 mins", video courses, books, blog posts etc.</p>
-                <p>ClojureScript - hmm... we have Cheatsheet, maybe some API docs, 2-3 books (it's difficult to find, but you should try!)</p>
+                <div class="columns-top">
+                    <div>
+                        <h5>JS</h5>
+                        <ul>
+                            <li>documentation</li>
+                            <li>tonns of books</li>
+                            <li>courses</li>
+                            <li>blog posts</li>
+                            <li>YouTube channels</li>
+                            <li>etc.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>ClojureScript</h5>
+                        <ul>
+                            <li>API documentation</li>
+                            <li>Cheatsheet</li>
+                            <li>2-3 books</li>
+                            <li>blog posts</li>
+                        </ul>
+                    </div>
+                </div>
                 <aside class="notes">
                     Намного меньше учебных материалов по сравнению с более популярными языками делает ClojureScript не то чтобы
                     сложным для изучения, но всегда надо что-то искать)
@@ -748,8 +811,8 @@
                 <p>It's difficult both to find a job and to hire</p>
                 <img src="examples/assets/difficult-choice.png" alt="how to get a CLJS job" width="320">
                 <aside class="notes">
-                    На самом деле, это шутка, есть хорошие компании, в которых используется ClojureScript (например, NuBank - один из крупнейших банков Южной Америки -
-                    они выкупили компанию Cognitect, которая занимается разработкой Clojure).
+                    На самом деле, это шутка, есть хорошие компании, в которых используется ClojureScript (например, NuBank - один из крупнейших банков Южной Америки
+                    (оценивается в 55 млрд) - они выкупили компанию Cognitect, которая занимается разработкой Clojure).
                     А отсутствие популярности вызвано отсутствием маркетинговых компаний, язык то топовый :)
                 </aside>
             </section>
@@ -759,7 +822,7 @@
                     <img src="examples/assets/attendify-slide.png" alt="Attendify app" width="800">
                     <aside class="notes">
                         Наш продукт, а рассказывать я буду про продукт Attendify (с ним больше знаком), - комплексная онлайн и мобильная платформа для организации событий,
-                        которая также фиксирует вовлеченность пользователей, их цели и предоставляет эти данные для стимуляции роста продукта клиента.
+                        которая также фиксирует вовлеченность пользователей, их цели и предоставляет эти данные для стимуляции роста ивентов клиента.
                         Сервер написан на Clojure, фронтенд на ClojureScript.
                     </aside>
                 </section>
@@ -789,7 +852,7 @@
                     </div>
                     <aside class="notes">
                         Приложение поддерживает события вживую и виртуальные. На виртуальных пользователь просматривает видео сессию, на событиях вживую присутствует в зале лично.
-                        Все остальное работает аналогично: публикация публичных сообщений, приватное общение в чате, просмотр контента и расписания, голосования, пуш нотификации,
+                        Все остальное работает аналогично: публикация сообщений для всех пользователей, приватное общение в чате, просмотр контента и расписания, голосования, пуш нотификации,
                         закладки, заметки, оценки.
 
                         Для событий вживую платформа может поддерживать 10к пользователей
@@ -810,6 +873,29 @@
                     <p class="text-28">Frontend: Reagent/Rum + re-frame</p>
                     <aside class="notes">
                         RPC - удаленный вызов процедур.
+                    </aside>
+                </section>
+                <section>
+                    <h4>Our stack</h4>
+                    <p><b>Backend</b></p>
+                    <div class="text-28">
+                        <p><b>Ring</b> - HTTP abstraction</p>
+                        <p><b>Compojure</b> - routing</p>
+                        <p><b>Aleph</b> - async HTTP server</p>
+                        <p><b>HugSQL</b> - SQL query builder</p>
+                        <p><b>prismatic/schema</b> - runtime validation</p>
+                        <p><b>JSON-RPC-ish</b> - communication protocol</p>
+                    </div>
+                    <p><b>Frontend</b></p>
+                    <div class="text-28">
+                        <p><b>Reagent/Rum</b> - React wrapper</p>
+                        <p><b>re-frame</b> - state management</p>
+                    </div>
+                    <aside class="notes">
+                        RPC - удаленный вызов процедур.
+                        Backend: Ring (HTTP requests), Compojure (routing), Aleph (framework), HugSQL (DB requests),
+                        prismatic/schema (declarative data description and validation), custom RPC protocol.
+                        Frontend: Reagent/Rum + re-frame.
                     </aside>
                 </section>
                 <section>
