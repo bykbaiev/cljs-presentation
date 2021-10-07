@@ -132,6 +132,7 @@
             <section>
                 <h3>REPL (Read–eval–print loop)</h3>
                 <video class="r-stretch" src="examples/assets/repl.mov" type="video/mp4" controls></video>
+                <a href="https://vimeo.com/230220635" target="_blank">REPL-Based Development Demo</a>
                 <aside class="notes">
                     Цикл "чтение - вычисление - вывод".
                     Любой код можно выполнить прямо в редакторе простой комбинацией клавиш.
@@ -742,6 +743,42 @@
                 </section>
             </section>
             <section>
+                <h4>Laziness</h4>
+                <pre>
+                    <code class="language-clojure" data-trim data-noescape data-line-numbers="1,2,4,6-7,9,12">
+                        (def input [{"ab" [1 0]} {"bc" [1 1]} {"de" [1 0]}
+                                    {"ab" [2 1]} {"ab" [0 1]}])
+
+                        ;; Need to get {"ab" [2 1] "bc" [1 1] "de" [1 0]}
+
+                        (defn merge-hashes-naive [coll]
+                            (apply merge-with (fn [a b] (map + a b))))
+
+                        (merge-hashes-naive input)
+                        => {"ab" (map + [0 1] (map + [2 1] [1 0])) ...}
+
+                        (merge-hashes-naive large-input)
+                        => java.lang.StackOverflowError
+                    </code>
+                </pre>
+                <a href="https://medium.com/@nikosfertakis/clojure-lazy-evaluation-and-stack-overflow-exceptions-1b8ee732ba0b" target="_blank">
+                    Clojure lazy evaluation and stack overflow exceptions
+                </a>
+                <aside class="notes">
+                    Ленивые коллекции неплохи для перформанса, но также могут приводить к каким-то неочевидным проблемам.
+                    И к сожалению, из-за того, что элемент вычисляется только тогда, когда он необходим, стек трейсы ошибок тоже не особо
+                    помогают.
+
+                    Здесь приведен пример того, как Clojure программист потратил пару дней на то, чтобы понять, почему такой маленький кусочек
+                    кода приводит к переполнению стека (подробности можно почитать в его посте по ссылке ниже).
+                    
+                    Из-за того, что map возвращает ленивую коллекцию, создается вложенность. В его случае во входных данных один ключ повторялся
+                    пару тысяч раз, и из-за вложенности стек переполнялся.
+
+                    Фиксом была замена map на mapv (жадное вычисление).
+                </aside>
+            </section>
+            <!-- <section>
                 <h4>Memory</h4>
                 <img src="examples/assets/memory-leaks.png" alt="memory leaks" width="500">
                 <aside class="notes">
@@ -751,6 +788,23 @@
                     к сожалению, тут я не накопал ничего более конкретного).
                     Ленивые вычисления работают на замыканиях, есть первый элемент и правило, по которому вычисляется следующий,
                     к тому же у ленивых коллекций есть проблема со стек трейсами ошибок - непонятно, когда именно будет вычислен следующий элемент и в каком контексте.
+                </aside>
+            </section> -->
+            <section>
+                <h4>Authoritarity in open source</h4>
+                <img src="examples/assets/rich-hickey.jpeg" class="r-stretch" alt="Rich Hickey, Clojure creator">
+                <br/>
+                <q cite="https://gist.github.com/richhickey/1563cddea1002958f96e7ba9519972d9">
+                    As a user of something open source you are not thereby entitled to anything at all.
+                    You are not entitled to contribute. You are not entitled to features. You are not entitled to the attention of others.
+                    You are not entitled to this explanation.</q>
+                <br/>
+                <a href="https://gist.github.com/richhickey/1563cddea1002958f96e7ba9519972d9" target="_blank">Open Source is Not About You</a>
+                <aside class="notes">
+                    Про авторитарность Рича Хики - создателя Clojure - можно почитать в его послании членам комьюнити.
+                    В конце дня именно он решает, как дальше будет развиваться язык.
+                    Аналогичное говорят и про создателя ElmJS Эвана Чаплики. Видимо, это их общая черта))
+                    The leadership style in Elm is extremely aggressive and authoritarian
                 </aside>
             </section>
             <section>
@@ -763,18 +817,38 @@
                 </aside>
             </section>
             <section>
+                <h4>Lisp curse</h4>
+                <q cite="http://winestockwebdesign.com/Essays/Lisp_Curse.html">
+                    Lisp is so powerful that problems which are technical issues in other programming languages are social issues in Lisp.
+                </q>
+                </br>
+                <a href="http://winestockwebdesign.com/Essays/Lisp_Curse.html" target="_blank">
+                    The Lisp Curse
+                </a>
+                <aside class="notes">
+                    В наследство от Lisp-а пришло не только макропрограммирование и обильное количество скобок, но еще и проклятие Lisp-a)
+                    Из-за гибкости и простоты решения каких-то довольно сложных проблем существуют библиотеки одного разработчика.
+                    Такие библиотеки создаются под нужды одного человека, не имеют документации, могут не фикситься годами,
+                    каждая может решить процентов 80 от вашей задачи.
+                </aside>
+            </section>
+            <section>
                 <h4>Support</h4>
-                <img src="examples/assets/8-years.png" alt="8 years to fix performance issue" width="300">
+                <div class="columns">
+                    <img src="examples/assets/ts-releases.png" alt="TypeScript releases" width="400">
+                    <img src="examples/assets/cljs-releases.png" alt="ClojureScript releases" width="400">
+                </div>
                 <a style="display:block" href="https://www.clojuriststogether.org/" target="_blank">clojurists together</a>
                 <aside class="notes">
-                    Коммьюнити в ClojureScript несколько меньше чем в JS. Поэтому меньше и библиотек, и активности в них.
+                    Коммьюнити в ClojureScript несколько меньше чем в JS. Поэтому меньше и библиотек
+                    (не берем во внимание библиотеки, в которых половина разработчика что-то еще делает), и активности в них.
                     Но тут все не так однозначно. Существует фонд поддержки разработчиков наиболее важных библиотек на Clojure.
                     Ребята проводят опросы и выясняют, какие библиотеки наиболее полезны, а потом спонсируют их дальнейшую разработку.
                     Также вcе следят за обратной совместимостью, например, текущая версия ClojureScript 1.10.879, аналогично обычно состоит
                     ситуация и для библиотек. Все продумано и стабильно).
 
-                    На скриншоте показан тикет из Clojure, который был открыт 8 лет. Касался производительности одной из кор функций. С ClojureScript ситуация
-                    получше (его разработкой занимается отдельная команда), но все же это не JavaScript.
+                    Тут можно сравнить активность в коре языка в сравнении с активностью в TypeScript. В TS стабильно раз в месяц что-то делают,
+                    в ClojureScript могут взять творческий отпуск на год)
                 </aside>
             </section>
             <section>
