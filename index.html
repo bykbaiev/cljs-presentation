@@ -754,10 +754,10 @@
                         (def input [{"ab" [1 0]} {"bc" [1 1]} {"de" [1 0]}
                                     {"ab" [2 1]} {"ab" [0 1]}])
 
-                        ;; Need to get {"ab" [2 1] "bc" [1 1] "de" [1 0]}
+                        ;; Need to get {"ab" [3 2] "bc" [1 1] "de" [1 0]}
 
                         (defn merge-hashes-naive [coll]
-                            (apply merge-with (fn [a b] (map + a b))))
+                            (apply merge-with (fn [a b] (map + a b)) coll))
 
                         (merge-hashes-naive input)
                         => {"ab" (map + [0 1] (map + [2 1] [1 0])) ...}
@@ -944,14 +944,6 @@
 
                         Так что проблемы тут не в Clojure, а в решениях, которые были приняты еще в начале разработки продукта, и не позволили должным образом
                         перевести платформу на новые рейки в начале пандемии.
-                    </aside>
-                </section>
-                <section>
-                    <h4>Our stack</h4>
-                    <p class="text-28">Backend: Ring (HTTP requests), Compojure (routing), Aleph (framework), HugSQL (DB requests), prismatic/schema (declarative data description and validation), custom RPC protocol</p>
-                    <p class="text-28">Frontend: Reagent/Rum + re-frame</p>
-                    <aside class="notes">
-                        RPC - удаленный вызов процедур.
                     </aside>
                 </section>
                 <section>
